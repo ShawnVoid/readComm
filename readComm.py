@@ -56,8 +56,8 @@ def read(data):
                 if session.get(url_ident):
                     msglist.append('Ident: '+ident+' | Type: '+itemType+' | Subject: '+subject+' | Date: '+date)
     try:
+        msgbox = ''
         for msg in msglist:
-            msgbox = ''
             msgbox = msgbox + msg + '/n'
 
         messagebox.showinfo('已读传讯', msgbox)
