@@ -52,11 +52,15 @@ def read(data):
                 subject = item.find(class_='subject').string
                 date = item.find(class_='date_issued').string
                 url_ident = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&employee_ident='+ccms+'&ident='+ident
-                msg = []
+                msglist = []
                 if session.get(url_ident):
-                    msg.append('Ident: '+ident+' | Type: '+itemType+' | Subject: '+subject+' | Date: '+date)
+                    msglist.append('Ident: '+ident+' | Type: '+itemType+' | Subject: '+subject+' | Date: '+date)
     try:
-        messagebox.showinfo('传讯', msg)
+        for msg in msglist:
+            msgbox = ''
+            msgbox = msgbox + msg + '/n'
+
+        messagebox.showinfo('已读传讯', msg)
         os._exit(0)
     except:
         messagebox.showinfo('CCMS', '无未读传讯！')
