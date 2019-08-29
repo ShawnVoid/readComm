@@ -60,7 +60,7 @@ def read(data):
             msgbox = ''
             msgbox = msgbox + msg + '/n'
 
-        messagebox.showinfo('已读传讯', msg)
+        messagebox.showinfo('已读传讯', msgbox)
         os._exit(0)
     except:
         messagebox.showinfo('CCMS', '无未读传讯！')
