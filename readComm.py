@@ -44,7 +44,12 @@ def read(data):
     resp = session.get(url)
     html = resp.content.decode('utf-8')
     soup = BeautifulSoup(html, 'lxml')
+    if not soup.find(id = 'priority').tbody.find(class_='subject'):
+        messagebox.showinfo('CCMS','无未读传讯！')
+        os._exit(0)
     list = soup.find(id='priority').tbody.find_all('tr')
+    msgbox = ''
+    count = 1
     for  item in list:
         if item:
                 ident = item.find(class_='ident').string
@@ -52,19 +57,11 @@ def read(data):
                 subject = item.find(class_='subject').string
                 date = item.find(class_='date_issued').string
                 url_ident = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&employee_ident='+ccms+'&ident='+ident
-                msglist = []
                 if session.get(url_ident):
-                    msglist.append('Ident: '+ident+' | Type: '+itemType+' | Subject: '+subject+' | Date: '+date)
-    try:
-        msgbox = ''
-        for msg in msglist:
-            msgbox = msgbox + msg + '/n'
-
-        messagebox.showinfo('已读传讯', msgbox)
-        os._exit(0)
-    except:
-        messagebox.showinfo('CCMS', '无未读传讯！')
-        os._exit(0)
+                    msgbox = msgbox + '%d'%count + '.' +subject+' | Date: '+date + '\n'
+                    count += 1
+    messagebox.showinfo('已读传讯', msgbox)
+    os._exit(0)
 
 
 app = Application()
