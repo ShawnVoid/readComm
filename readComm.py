@@ -15,12 +15,17 @@ class Application(Frame):
         self.nameInput.grid(row=0,column=1,padx=10,pady=10)
         self.nameInput2 = Entry(self, show="*")
         self.nameInput2.grid(row=1,column=1,padx=10,pady=10)
-        self.label = Label(self, text="LoginID:")
-        self.label.grid(row=0,sticky=E)
+        self.label = Label(self, text="Login ID:")
+        self.label.grid(row=0,column=0,sticky=E)
         self.label2 = Label(self,text="Password:")
-        self.label2.grid(row=1,sticky=E)
-        self.button =Button(self, text='提交',command=self.login)
-        self.button.grid(row=1,column=2, padx=7,pady=7)
+        self.label2.grid(row=1,column=0,sticky=E)
+        self.button =Button(self, text='Submit',width=7,command=self.login)
+        self.button.grid(row=0,column=2,sticky=E, padx=10,pady=10)
+        self.button2 =Button(self, text='Cancel',width=7,command=self.cancel)
+        self.button2.grid(row=1,column=2,sticky=E, padx=10,pady=10)
+
+    def cancel(self):
+        os._exit(0)
 
     def login(self):
         loginID = self.nameInput.get()
@@ -66,5 +71,4 @@ def read(data):
 
 app = Application()
 app.master.title('CCMS Login')
-app.master.iconbitmap('readComm.ico')
 app.mainloop()
