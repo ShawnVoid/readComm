@@ -12,17 +12,17 @@ class Application(Frame):
 
     def createWidgets(self):
         self.nameInput = Entry(self)
-        self.nameInput.grid(row=0,column=1,padx=10,pady=10)
-        self.nameInput2 = Entry(self,show="*")
-        self.nameInput2.grid(row=1,column=1,padx=10,pady=10)
+        self.nameInput.grid(row=0, column=1, padx=5, pady=10)
+        self.nameInput2 = Entry(self, show="*")
+        self.nameInput2.grid(row=1, column=1, padx=5, pady=10)
         self.label = Label(self, text="Login ID:")
-        self.label.grid(row=0,column=0,sticky=E)
-        self.label2 = Label(self,text="Password:")
-        self.label2.grid(row=1,column=0,sticky=E)
-        self.button =Button(self, text='Submit',width=7,command=self.login)
-        self.button.grid(row=0,column=2,sticky=E, padx=10,pady=10)
-        self.button2 =Button(self, text='Cancel',width=7,command=self.quit)
-        self.button2.grid(row=1,column=2,sticky=E, padx=10,pady=10)
+        self.label.grid(row=0, column=0, padx=6,sticky=E)
+        self.label2 = Label(self, text="Password:")
+        self.label2.grid(row=1, column=0,padx=6, sticky=E)
+        self.button = Button(self, text='Submit',width=7, borderwidth=1, relief=RIDGE, command=self.login)
+        self.button.grid(row=0, column=2, sticky=E, padx=10, pady=10)
+        self.button2 = Button(self, text='Cancel', width=7, borderwidth=1, relief=RIDGE, command=self.quit)
+        self.button2.grid(row=1, column=2, sticky=E, padx=10, pady=10)
 
     def login(self):
         loginID = self.nameInput.get()
@@ -67,6 +67,7 @@ def read(data):
 
 
 app = Application()
+app.master.resizable(False,False)
 app.master.title('CCMS Login')
 app.nameInput.focus()
 app.mainloop()
