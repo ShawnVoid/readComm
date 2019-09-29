@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from tkinter import *
 import tkinter.messagebox as messagebox
-import os
+
 
 class Application(Frame):
     def __init__(self, master=None):
@@ -13,7 +13,7 @@ class Application(Frame):
     def createWidgets(self):
         self.nameInput = Entry(self)
         self.nameInput.grid(row=0,column=1,padx=10,pady=10)
-        self.nameInput2 = Entry(self, show="*")
+        self.nameInput2 = Entry(self,show="*")
         self.nameInput2.grid(row=1,column=1,padx=10,pady=10)
         self.label = Label(self, text="Login ID:")
         self.label.grid(row=0,column=0,sticky=E)
@@ -21,11 +21,8 @@ class Application(Frame):
         self.label2.grid(row=1,column=0,sticky=E)
         self.button =Button(self, text='Submit',width=7,command=self.login)
         self.button.grid(row=0,column=2,sticky=E, padx=10,pady=10)
-        self.button2 =Button(self, text='Cancel',width=7,command=self.cancel)
+        self.button2 =Button(self, text='Cancel',width=7,command=self.quit)
         self.button2.grid(row=1,column=2,sticky=E, padx=10,pady=10)
-
-    def cancel(self):
-        os._exit(0)
 
     def login(self):
         loginID = self.nameInput.get()
@@ -44,14 +41,14 @@ def read(data):
         ccms = BeautifulSoup(session.get('https://www.wblt.ccms.teleperformance.com/ccms-bin/home.pl').content.decode('utf-8'),'lxml').find(class_='pmc').find(class_='ident').string
     except:
         messagebox.showinfo('CCMS', 'LoginID或密码错误！')
-        os._exit(0)
+        exit(0)
     url = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?employee_ident='+ccms
     resp = session.get(url)
     html = resp.content.decode('utf-8')
     soup = BeautifulSoup(html, 'lxml')
     if not soup.find(id = 'priority').tbody.find(class_='subject'):
         messagebox.showinfo('CCMS','无未读传讯！')
-        os._exit(0)
+        exit(0)
     list = soup.find(id='priority').tbody.find_all('tr')
     msgbox = ''
     count = 1
@@ -66,9 +63,10 @@ def read(data):
                     msgbox = msgbox + '%d'%count + '.' +subject+' | Date: '+date + '\n'
                     count += 1
     messagebox.showinfo('已读传讯', msgbox)
-    os._exit(0)
+    exit(0)
 
 
 app = Application()
 app.master.title('CCMS Login')
+app.nameInput.focus()
 app.mainloop()
