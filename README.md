@@ -6,4 +6,5 @@ Login to read all the communications in ccms, if you don't wanna to click them o
 ## Modules
 - requests
 - beautifulsoup
+- lxml
 - tkinter
