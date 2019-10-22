@@ -24,13 +24,14 @@ class Application(tk.Tk):
 		self.idInput.place(x=69,y=329)
 		self.passInput = tk.Entry(self,width=17, show="*")
 		self.passInput.place(x=278,y=329)
-		self.button = tk.Button(self, text='Submit',width=6, borderwidth=1,relief=RIDGE, command=lambda :self.thread_it(self.login))
-		self.button.place(x=428,y=325)
+		self.buttonSub = tk.Button(self, text='Submit',width=6, borderwidth=1,relief=RIDGE, command=lambda :self.thread_it(self.login))
+		self.buttonSub.place(x=428,y=325)
 		tk.Button(self, text='Cancel',width=6, borderwidth=1, relief=RIDGE, command=lambda :self.thread_it(self.quit)).place(x=505,y=325)
+
 
 	# 逻辑：登录
 	def login(self):
-		self.button['state'] = DISABLED
+		self.buttonSub['state'] = DISABLED
 		self.text.focus()
 		loginID = self.idInput.get()
 		password = self.passInput.get()
@@ -73,9 +74,6 @@ class Application(tk.Tk):
 				count += 1
 		messagebox.showinfo('已读传讯','已读'+'%d'%(count-1)+'条传讯!')
 
-	# 逻辑：退出
-	def quit(self):
-		os._exit(0)
 
 	# 打包进线程（耗时的操作）
 	@staticmethod
