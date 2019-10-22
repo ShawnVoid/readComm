@@ -11,8 +11,7 @@ import tkinter.messagebox as messagebox
 
 class Application(tk.Tk):
 	def __init__(self):
-		super().__init__()
-		
+		super().__init__()		
 		self.createUI()
 
 	# 生成界面
@@ -58,22 +57,21 @@ class Application(tk.Tk):
 		count = 1
 		for  item in list:
 			if item:
-					ident = item.find(class_='ident').string
-					itemType = item.find(class_='comm_type').string
-					subject = item.find(class_='subject').string
-					acknowledge = item.find(class_='ack_by').string
-					date = item.find(class_='date_issued').string
-					url_ident = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&employee_ident='+ccms+'&ident='+ident
-					url_ident_ack = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&new_communication=1&employee_ident='+ccms+'&ident='+ident+'&frmOption=ACK'
-					if acknowledge == 'N/A':
-						session.get(url_ident)
-					else:
-						session.get(url_ident_ack)
-					msgbox = '%d'%count + '.' +subject+'\n'
-					self.text.insert(tk.END,msgbox)
-					count += 1
+				ident = item.find(class_='ident').string
+				itemType = item.find(class_='comm_type').string
+				subject = item.find(class_='subject').string
+				acknowledge = item.find(class_='ack_by').string
+				date = item.find(class_='date_issued').string
+				url_ident = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&employee_ident='+ccms+'&ident='+ident
+				url_ident_ack = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&new_communication=1&employee_ident='+ccms+'&ident='+ident+'&frmOption=ACK'
+				if acknowledge == 'N/A':
+					session.get(url_ident)
+				else:
+					session.get(url_ident_ack)
+				msgbox = '%d'%count + '.' +subject+'\n'
+				self.text.insert(tk.END,msgbox)
+				count += 1
 		messagebox.showinfo('已读传讯','已读'+'%d'%(count-1)+'条传讯!')
-
 
 	# 逻辑：退出
 	def quit(self):
