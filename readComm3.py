@@ -16,7 +16,7 @@ class Application(tk.Tk):
 
 	# 生成界面
 	def createUI(self):
-		self.text = tk.Text(self)
+		self.text = tk.Text(self,font=('微软雅黑', 9, 'normal'))
 		self.text.place(x=1,y=1)
 		tk.Label(self, text="Login ID:").place(x=9,y=328)
 		tk.Label(self, text="Password:").place(x=210,y=328)
