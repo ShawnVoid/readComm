@@ -41,6 +41,7 @@ class Application(tk.Tk):
 		session = requests.Session()
 		headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 		login_url = 'https://www.wblt.ccms.teleperformance.com/auth/LOGIN'
+		self.text.insert(tk.END,'登录中...\n')
 		resp = session.post(login_url, data, headers)
 		try:
 			ccms = BeautifulSoup(session.get('https://www.wblt.ccms.teleperformance.com/ccms-bin/home.pl').content.decode('utf-8'),'lxml').find(class_='pmc').find(class_='ident').string
@@ -70,6 +71,7 @@ class Application(tk.Tk):
 				else:
 					session.get(url_ident_ack)
 				msgbox = '%d'%count + '.' +subject+'\n'
+				self.text.delete(0.0,tk.END)
 				self.text.insert(tk.END,msgbox)
 				count += 1
 		messagebox.showinfo('已读传讯','已读'+'%d'%(count-1)+'条传讯!')
@@ -79,7 +81,7 @@ class Application(tk.Tk):
 	@staticmethod
 	def thread_it(func, *args):
 		t = threading.Thread(target=func, args=args) 
-		t.setDaemon(True)   # 守护--就算主界面关闭，线程也会留守后台运行（不对!）
+		t.setDaemon(True)   # 守护--主界面关闭，线程会立刻退出
 		t.start()		   # 启动
 		# t.join()		  # 阻塞--会卡死界面！
 		
