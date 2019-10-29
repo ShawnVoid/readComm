@@ -56,6 +56,7 @@ class Application(tk.Tk):
 			messagebox.showinfo('CCMS','无未读传讯！')
 			os._exit(0)
 		list = soup.find(id='priority').tbody.find_all('tr')
+		self.text.delete(0.0,tk.END)
 		count = 1
 		for  item in list:
 			if item:
@@ -71,7 +72,6 @@ class Application(tk.Tk):
 				else:
 					session.get(url_ident_ack)
 				msgbox = '%d'%count + '.' +subject+'\n'
-				self.text.delete(0.0,tk.END)
 				self.text.insert(tk.END,msgbox)
 				count += 1
 		messagebox.showinfo('已读传讯','已读'+'%d'%(count-1)+'条传讯!')
