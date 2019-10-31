@@ -42,14 +42,14 @@ class Application(tk.Tk):
 		headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 		login_url = 'https://www.wblt.ccms.teleperformance.com/auth/LOGIN'
 		self.text.insert(tk.END,'登录中...\n')
-		resp = session.post(login_url, data, headers)
+		resp = session.post(url=login_url, data=data, headers=headers)
 		try:
-			ccms = BeautifulSoup(session.get('https://www.wblt.ccms.teleperformance.com/ccms-bin/home.pl').content.decode('utf-8'),'lxml').find(class_='pmc').find(class_='ident').string
+			ccms = BeautifulSoup(session.get(url='https://www.wblt.ccms.teleperformance.com/ccms-bin/home.pl',headers=headers).content.decode('utf-8'),'lxml').find(class_='pmc').find(class_='ident').string
 		except:
 			messagebox.showinfo('CCMS', 'LoginID或密码错误！')
 			os._exit(0)
 		url = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?employee_ident='+ccms
-		resp = session.get(url)
+		resp = session.get(url=url,headers=headers)
 		html = resp.content.decode('utf-8')
 		soup = BeautifulSoup(html, 'lxml')
 		if not soup.find(id = 'priority').tbody.find(class_='subject'):
@@ -68,9 +68,9 @@ class Application(tk.Tk):
 				url_ident = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&employee_ident='+ccms+'&ident='+ident
 				url_ident_ack = 'https://www.wblt.ccms.teleperformance.com/ccms-bin/employee/communication.pl?frmTarget=NEW_COMMUNICATION&new_communication=1&employee_ident='+ccms+'&ident='+ident+'&frmOption=ACK'
 				if acknowledge == 'N/A':
-					session.get(url_ident)
+					session.get(url=url_ident,headers=headers)
 				else:
-					session.get(url_ident_ack)
+					session.get(url=url_ident_ack,headers=headers)
 				msgbox = '%d'%count + '.' +subject+'\n'
 				self.text.insert(tk.END,msgbox)
 				count += 1
